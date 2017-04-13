@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Logs into the Docker Hub registry. Hides the username and password
+# that would otherwise appear in the CI build output.
+#
+# Environment variables:
+# - DOCKER_USERNAME: The username to log into the Docker Hub registry
+# - DOCKER_PASSWORD: The password to log into the Docker Hub registry
+#
+# Usage:
+#   docker-login
+#
+docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
