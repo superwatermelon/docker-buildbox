@@ -2,9 +2,9 @@
 
 ![Build on Travis CI][travis-ci]
 
-Docker image for builds containing [Python3][python3],
-[VirtualEnv][virtualenv], [Terraform][terraform], [AWS CLI][awscli] and build
-tools such as [Make][make] and [GCC][gcc].
+Docker image for builds. Contains [Python3][python3], [VirtualEnv][virtualenv],
+[Terraform][terraform], [AWS CLI][awscli] and build tools such as [Make][make]
+and [GCC][gcc].
 
 View on [Docker Hub][docker-hub].
 
