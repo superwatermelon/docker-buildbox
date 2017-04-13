@@ -20,6 +20,16 @@
   [ "$status" -eq 0 ]
 }
 
+@test "bash is installed" {
+  run docker run --rm "$IMAGE" bash --version
+  [ "$status" -eq 0 ]
+}
+
+@test "ca-certificates are installed" {
+  run docker run --rm "$IMAGE" find /etc/ssl -name "*.crt"
+  [ "$status" -eq 0 ]
+}
+
 @test "run as buildbox" {
   run docker run --rm "$IMAGE" whoami
   [ "$output" == "buildbox" ]
