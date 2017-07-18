@@ -30,6 +30,11 @@
   [ "$status" -eq 0 ]
 }
 
+@test "docker is installed" {
+  run docker run --rm "$IMAGE" docker --version
+  [ "$status" -eq 0 ]
+}
+
 @test "run as buildbox" {
   run docker run --rm "$IMAGE" whoami
   [ "$output" == "buildbox" ]
