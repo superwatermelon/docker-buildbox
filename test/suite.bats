@@ -35,6 +35,16 @@
   [ "$status" -eq 0 ]
 }
 
+@test "node is installed" {
+  run docker run --rm "$IMAGE" node --version
+  [ "$status" -eq 0 ]
+}
+
+@test "npm is installed" {
+  run docker run --rm "$IMAGE" npm --version
+  [ "$status" -eq 0 ]
+}
+
 @test "run as buildbox" {
   run docker run --rm "$IMAGE" whoami
   [ "$output" == "buildbox" ]
