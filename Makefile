@@ -10,7 +10,6 @@ test:
 	IMAGE=$(IMAGE_NAME):$(tag) bats test/suite.bats
 
 release:
-	docker build --tag $(IMAGE_NAME):$(tag) .
 	docker tag $(IMAGE_NAME):$(tag) $(IMAGE_NAME):latest
 	scripts/docker-login
 	docker push $(IMAGE_NAME):$(tag)
