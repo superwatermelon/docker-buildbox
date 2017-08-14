@@ -1,18 +1,18 @@
-IMAGE_NAME := superwatermelon/buildbox
-tag := $(if $(TAG),$(TAG),test)
+image := superwatermelon/buildbox
+tag := test
+
+.PHONY: default image test release
 
 default: image
 
 image:
-	docker build --tag $(IMAGE_NAME):$(tag) .
+	docker build --tag $(image):$(tag) .
 
 test:
-	IMAGE=$(IMAGE_NAME):$(tag) bats test/suite.bats
+	IMAGE=$(image):$(tag) bats test/suite.bats
 
-release:
-	docker tag $(IMAGE_NAME):$(tag) $(IMAGE_NAME):latest
+release: image
+	docker tag $(image):$(tag) $(image):latest
 	scripts/docker-login
-	docker push $(IMAGE_NAME):$(tag)
-	docker push $(IMAGE_NAME):latest
-
-.PHONY: default image test release
+	docker push $(image):$(tag)
+	docker push $(image):latest

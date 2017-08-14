@@ -11,6 +11,6 @@ script:
 
 deploy:
   provider: script
-  script: make release TAG=$TRAVIS_TAG
+  script: make release tag=$TRAVIS_TAG
   on:
     tags: true
