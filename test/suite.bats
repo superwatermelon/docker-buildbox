@@ -46,7 +46,12 @@
 }
 
 @test "jq is installed" {
-  run jq --version
+  run docker run --rm "$IMAGE" jq --version
+  [ "$status" -eq 0 ]
+}
+
+@test "bats is installed" {
+  run docker run --rm "$IMAGE" bats --version
   [ "$status" -eq 0 ]
 }
 
