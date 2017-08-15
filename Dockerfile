@@ -8,7 +8,8 @@ RUN addgroup -g ${gid} ${group} && \
   apk --no-cache add build-base bash python3 terraform ca-certificates docker bats \
     nodejs nodejs-npm jq libsass && \
   pip3 install --upgrade pip && \
-  pip3 install virtualenv awscli
+  pip3 install virtualenv awscli && \
+  npm install --global node-gyp node-sass
 WORKDIR /home/${user}
 VOLUME /home/${user}
 USER ${user}
