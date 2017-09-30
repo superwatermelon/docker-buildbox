@@ -30,8 +30,8 @@
   [ "$status" -eq 0 ]
 }
 
-@test "docker is installed" {
-  run docker run --rm "$IMAGE" docker --version
+@test "docker is installed at stable version" {
+  run docker run --rm "$IMAGE" /bin/sh -c 'docker --version | grep "1.12.6"'
   [ "$status" -eq 0 ]
 }
 
