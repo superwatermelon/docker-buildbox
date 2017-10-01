@@ -6,7 +6,7 @@ ARG gid=1000
 RUN addgroup -g ${gid} ${group} && \
   adduser -u ${uid} -G ${group} -D ${user} && \
   apk --no-cache add build-base bash python3 terraform ca-certificates bats \
-    nodejs nodejs-npm jq libsass openssl && \
+    nodejs nodejs-npm jq libsass openssl git && \
   pip3 install --upgrade pip && \
   pip3 install virtualenv awscli && \
   npm install --global node-gyp node-sass && \
