@@ -9,7 +9,7 @@ RUN addgroup -g ${gid} ${group} && \
     nodejs nodejs-npm jq libsass openssl git && \
   pip3 install --upgrade pip && \
   pip3 install virtualenv awscli && \
-  npm install --global node-gyp node-sass && \
+  npm install --global npm node-gyp node-sass && \
   wget https://get.docker.com/builds/Linux/x86_64/docker-1.12.6.tgz && \
   tar -xzvf docker-1.12.6.tgz && \
   ln -s /docker/docker /usr/local/bin/docker
