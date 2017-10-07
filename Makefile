@@ -3,7 +3,7 @@ tag := test
 
 .PHONY: default image test release
 
-default: image
+default: image test
 
 image:
 	docker build --tag $(image):$(tag) .
@@ -11,7 +11,7 @@ image:
 test:
 	IMAGE=$(image):$(tag) bats test/suite.bats
 
-release: image
+release:
 	docker tag $(image):$(tag) $(image):latest
 	scripts/docker-login
 	docker push $(image):$(tag)
