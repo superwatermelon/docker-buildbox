@@ -1,8 +1,10 @@
 FROM alpine:latest
+
 ARG user=buildbox
 ARG group=buildbox
 ARG uid=1000
 ARG gid=1000
+
 RUN addgroup -g ${gid} ${group} && \
   adduser -u ${uid} -G ${group} -D ${user} && \
   apk --no-cache add build-base bash python3 ca-certificates bats \
@@ -15,7 +17,11 @@ RUN addgroup -g ${gid} ${group} && \
   mv docker/docker /usr/local/bin/docker && \
   wget https://releases.hashicorp.com/terraform/0.10.7/terraform_0.10.7_linux_amd64.zip && \
   unzip terraform_0.10.7_linux_amd64.zip && \
-  mv terraform /usr/local/bin/terraform
+  mv terraform /usr/local/bin/terraform && \
+  mkdir /home/${user}/.aws
+
+COPY scripts/buildbox-* /usr/local/bin/
+
 WORKDIR /home/${user}
 VOLUME /home/${user}
 USER ${user}

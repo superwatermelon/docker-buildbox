@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Logs into a AWS ECR Repository. Hides the output that would otherwise
+# appear in the CI build output.
+#
+# Usage:
+#   buildbox-ecr-login
+#
+$(aws ecr get-login)

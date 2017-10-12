@@ -56,7 +56,7 @@
 }
 
 @test "libsass is installed" {
-  run docker run --rm "$IMAGE" [[ -f /usr/lib/libsass.so.0 ]]
+  run docker run --rm "$IMAGE" /bin/sh -c '[[ -f /usr/lib/libsass.so.0 ]]'
   [ "$status" -eq 0 ]
 }
 
@@ -68,4 +68,24 @@
 @test "run as buildbox" {
   run docker run --rm "$IMAGE" whoami
   [ "$output" == "buildbox" ]
+}
+
+@test ".aws directory exists" {
+  run docker run --rm "$IMAGE" /bin/sh -c '[[ -d ~/.aws ]]'
+  [ "$status" -eq 0 ]
+}
+
+@test "buildbox-assume-role command is available" {
+  run docker run --rm "$IMAGE" /bin/sh -c '[[ -x "$(command -v buildbox-assume-role)" ]]'
+  [ "$status" -eq 0 ]
+}
+
+@test "buildbox-ecr-login command is available" {
+  run docker run --rm "$IMAGE" /bin/sh -c '[[ -x "$(command -v buildbox-ecr-login)" ]]'
+  [ "$status" -eq 0 ]
+}
+
+@test "buildbox-ecr-docker-push command is available" {
+  run docker run --rm "$IMAGE" /bin/sh -c '[[ -x "$(command -v buildbox-ecr-docker-push)" ]]'
+  [ "$status" -eq 0 ]
 }

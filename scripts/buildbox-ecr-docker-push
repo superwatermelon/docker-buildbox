@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Pushes a Docker image into an AWS ECR Repository
+#
+# Environment variables:
+# - DOCKER_IMAGE: The image to push to the AWS ECR Repository
+# - DOCKER_TAG: The tag to push to the AWS ECR Repository
+#
+# Usage:
+#   buildbox-ecr-docker-push
+#
+get-repository-uri() {
+  aws ecr describe-repositories \
+    --repository-name "${DOCKER_IMAGE}" \
+    --query repositories[0].repositoryUri \
+    --output text
+}
+
+repository="$(get-repository-uri)"
+docker tag "${repository}:${DOCKER_TAG}" "${DOCKER_IMAGE}:${DOCKER_TAG}" && \
+docker push "${repository}:${DOCKER_TAG}"

@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Assumes role for deployment converting the output of the AWS STS
+# assume role CLI command into the correct format for a credentials file.
+#
+# Environment variables:
+# - AWS_ROLE_ARN: The role ARN of the role to assume
+# - AWS_ROLE_SESSION_NAME: The name of the STS session
+# - AWS_PROFILE: The profile to use for this login (default: "default")
+#
+# Usage:
+#   buildbox-ecr-docker-push
+#
+
+AWS_PROFILE="${AWS_PROFILE:-"default"}"
+
+assume-role() {
+  aws sts assume-role --role-arn "${AWS_ROLE_ARN}" \
+                      --role-session-name "${AWS_ROLE_SESSION_NAME}"
+}
+
+sts-to-credentials() {
+  jq -r "\"[${AWS_PROFILE}]\n\" +
+         \"aws_access_key_id = \" + .Credentials.AccessKeyId + \"\n\" +
+         \"aws_secret_access_key = \" + .Credentials.SecretAccessKey + \"\n\" +
+         \"aws_session_token = \" + .Credentials.SessionToken"
+}
+
+assume-role | sts-to-credentials
