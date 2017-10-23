@@ -75,6 +75,11 @@
   [ "$status" -eq 0 ]
 }
 
+@test ".aws directory owned by buildbox user" {
+  run docker run --rm "$IMAGE" /bin/sh -c 'stat -c "%U %G" ~/.aws'
+  [ "$output" == "buildbox buildbox" ]
+}
+
 @test "buildbox-assume-role command is available" {
   run docker run --rm "$IMAGE" /bin/sh -c '[[ -x "$(command -v buildbox-assume-role)" ]]'
   [ "$status" -eq 0 ]

@@ -18,7 +18,8 @@ RUN addgroup -g ${gid} ${group} && \
   wget https://releases.hashicorp.com/terraform/0.10.7/terraform_0.10.7_linux_amd64.zip && \
   unzip terraform_0.10.7_linux_amd64.zip && \
   mv terraform /usr/local/bin/terraform && \
-  mkdir /home/${user}/.aws
+  mkdir /home/${user}/.aws && \
+  chown ${uid}:${gid} /home/${user}/.aws
 
 COPY scripts/buildbox-* /usr/local/bin/
 
