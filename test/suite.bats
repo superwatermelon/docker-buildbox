@@ -6,7 +6,7 @@
 }
 
 @test "terraform is installed" {
-  run docker run --rm "$IMAGE" /bin/sh -c 'terraform --version | head -n 1 | grep "0.10.7"'
+  run docker run --rm "$IMAGE" /bin/sh -c 'terraform --version | head -n 1 | grep "0.10.8"'
   [ "$status" -eq 0 ]
 }
 
@@ -30,8 +30,8 @@
   [ "$status" -eq 0 ]
 }
 
-@test "docker is installed at stable version" {
-  run docker run --rm "$IMAGE" /bin/sh -c 'docker --version | grep "1.12.6"'
+@test "docker is installed at latest version" {
+  run docker run --rm "$IMAGE" /bin/sh -c 'docker version | grep -E "Version:\s+17\."'
   [ "$status" -eq 0 ]
 }
 
