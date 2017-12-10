@@ -6,7 +6,7 @@
 }
 
 @test "terraform is installed" {
-  run docker run --rm "$IMAGE" /bin/sh -c 'terraform --version | head -n 1 | grep "0.10.8"'
+  run docker run --rm "$IMAGE" /bin/sh -c 'terraform --version | head -n 1 | grep "0.11.1"'
   [ "$status" -eq 0 ]
 }
 
