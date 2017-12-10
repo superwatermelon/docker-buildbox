@@ -12,18 +12,28 @@
 #   buildbox-ecr-docker-push
 #
 
-AWS_PROFILE="${AWS_PROFILE:-"default"}"
-
 assume-role() {
-  aws sts assume-role --role-arn "${AWS_ROLE_ARN}" \
-                      --role-session-name "${AWS_ROLE_SESSION_NAME}"
+  local readonly role_arn="$1"
+  local readonly role_session_name="$2"
+  aws sts assume-role --role-arn "${role_arn}" \
+                      --role-session-name "${role_session_name}"
 }
 
 sts-to-credentials() {
-  jq -r "\"[${AWS_PROFILE}]\n\" +
-         \"aws_access_key_id = \" + .Credentials.AccessKeyId + \"\n\" +
+  local readonly profile="$1"
+  echo "[${profile}]"
+  jq -r "\"aws_access_key_id = \" + .Credentials.AccessKeyId + \"\n\" +
          \"aws_secret_access_key = \" + .Credentials.SecretAccessKey + \"\n\" +
          \"aws_session_token = \" + .Credentials.SessionToken"
 }
 
-assume-role | sts-to-credentials
+assume-role-credentials() {
+  local readonly profile="$1"
+  local readonly role_arn="$2"
+  local readonly role_session_name="$3"
+  local assume_role_result
+  assume_role_result="$(assume-role "${role_arn}" "${role_session_name}")" || exit 1
+  sts-to-credentials "${profile}" <<< "${assume_role_result}" || exit 1
+}
+
+assume-role-credentials "${AWS_ROLE_PROFILE:-"default"}" "${AWS_ROLE_ARN}" "${AWS_ROLE_SESSION_NAME}"
